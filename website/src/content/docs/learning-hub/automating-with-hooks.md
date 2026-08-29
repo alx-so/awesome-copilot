@@ -3,7 +3,7 @@ title: 'Automating with Hooks'
 description: 'Learn how to use hooks to automate lifecycle events like formatting, linting, and governance checks during Copilot agent sessions.'
 authors:
   - GitHub Copilot Learning Hub Team
-lastUpdated: 2026-07-13
+lastUpdated: 2026-08-29
 estimatedReadingTime: '8 minutes'
 tags:
   - hooks
@@ -101,6 +101,8 @@ Hooks can trigger on several lifecycle events:
 | `errorOccurred` | An error occurs during agent execution | Log errors for debugging, send notifications, track error patterns |
 
 > **Key insight**: The `preToolUse` hook is the most powerful — it can **approve or deny** individual tool executions. This enables fine-grained security policies like blocking specific shell commands or requiring approval for sensitive file operations.
+
+> **OpenTelemetry trace context** *(v1.0.81+)*: Hook inputs now include a `traceparent` field (and `tracestate` when the span carries vendor state) containing the current OpenTelemetry trace context. Command hooks also receive these values as environment variables. This lets your hook scripts emit correlated spans to your observability backend, so you can trace a Copilot session's tool calls alongside your existing application telemetry.
 
 ### sessionStart additionalContext
 

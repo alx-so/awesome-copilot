@@ -3,7 +3,7 @@ title: 'Installing and Using Plugins'
 description: 'Learn how to find, install, and manage plugins that extend GitHub Copilot CLI with reusable agents, skills, hooks, and integrations.'
 authors:
   - GitHub Copilot Learning Hub Team
-lastUpdated: 2026-08-19
+lastUpdated: 2026-08-29
 relatedArticles:
   - ./building-custom-agents.md
   - ./creating-effective-skills.md
@@ -239,13 +239,17 @@ copilot plugin uninstall my-plugin
 
 ### Enabling and Disabling Plugin Components
 
-*(v1.0.76+)* The `/plugins` command (or `copilot plugin list` in non-interactive mode) now includes **enable/disable toggles** for individual plugin components. You can turn off specific agents, instructions, hooks, LSP servers, or entire plugins without uninstalling them:
+*(v1.0.76+)* The `/plugin` command (or `copilot plugin list` in non-interactive mode) includes **enable/disable toggles** for individual plugin components. You can turn off specific agents, instructions, hooks, LSP servers, or entire plugins without uninstalling them:
 
 ```
-/plugins
+/plugin
 ```
 
-This opens an interactive list where each installed plugin and its components are shown with a toggle. Disabling a component hides it from Copilot without removing it from disk — useful for temporarily deactivating a hook that is too noisy, or turning off a plugin's instructions when working on a different type of project. Re-enable the component at any time from the same `/plugins` menu.
+This opens the **plugins dashboard** — an interactive list where each installed plugin and its components are shown with a toggle. Disabling a component hides it from Copilot without removing it from disk — useful for temporarily deactivating a hook that is too noisy, or turning off a plugin's instructions when working on a different type of project. Re-enable the component at any time from the same `/plugin` menu.
+
+The dashboard is also the central hub for managing MCP servers and skills — you can open the same view with `/mcp` or `/skills` to jump directly to those sections.
+
+> **v1.0.81 note**: The older `/plugins` command was removed and replaced by the unified plugins dashboard. Use `/plugin`, `/mcp`, and `/skills` instead. The separate `/subagents` and `/instructions` commands now manage agents and instructions respectively.
 
 ### Loading Plugins from a Local Directory
 
