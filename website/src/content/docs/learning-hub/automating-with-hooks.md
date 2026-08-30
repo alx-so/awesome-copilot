@@ -3,7 +3,7 @@ title: 'Automating with Hooks'
 description: 'Learn how to use hooks to automate lifecycle events like formatting, linting, and governance checks during Copilot agent sessions.'
 authors:
   - GitHub Copilot Learning Hub Team
-lastUpdated: 2026-07-13
+lastUpdated: 2026-08-30
 estimatedReadingTime: '8 minutes'
 tags:
   - hooks
@@ -101,6 +101,37 @@ Hooks can trigger on several lifecycle events:
 | `errorOccurred` | An error occurs during agent execution | Log errors for debugging, send notifications, track error patterns |
 
 > **Key insight**: The `preToolUse` hook is the most powerful — it can **approve or deny** individual tool executions. This enables fine-grained security policies like blocking specific shell commands or requiring approval for sensitive file operations.
+
+### OpenTelemetry Trace Context in Hooks (v1.0.81+)
+
+Hooks now receive the current [OpenTelemetry](https://opentelemetry.io/) trace context, enabling correlated distributed tracing across your Copilot sessions and external observability systems.
+
+**How it works**: Hook inputs gain two new fields:
+
+- `traceparent` — the W3C trace context header (e.g., `00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01`), always present when a trace is active
+- `tracestate` — vendor-specific trace state, present only when the active span carries vendor state
+
+Command hooks (`type: "command"`) also receive these as environment variables:
+
+| Variable | Description |
+|----------|-------------|
+| `TRACEPARENT` | W3C trace parent header |
+| `TRACESTATE` | W3C trace state header (if applicable) |
+
+This allows you to emit correlated spans from hook scripts into your existing tracing infrastructure (Jaeger, Zipkin, Honeycomb, Datadog, etc.), giving you end-to-end visibility from user prompt through agent tool use to your CI/CD pipeline.
+
+```bash
+#!/usr/bin/env bash
+# Example: Forward trace context to an external observability endpoint
+INPUT=$(cat)
+TRACE_ID=$(echo "$INPUT" | jq -r '.traceparent // empty' | cut -d'-' -f2)
+
+if [ -n "$TRACE_ID" ]; then
+  curl -s -X POST "https://metrics.example.com/copilot-session-start" \
+    -H "traceparent: $TRACEPARENT" \
+    -d "{\"event\": \"sessionStart\", \"traceId\": \"$TRACE_ID\"}"
+fi
+```
 
 ### sessionStart additionalContext
 

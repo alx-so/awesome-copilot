@@ -3,7 +3,7 @@ title: 'Installing and Using Plugins'
 description: 'Learn how to find, install, and manage plugins that extend GitHub Copilot CLI with reusable agents, skills, hooks, and integrations.'
 authors:
   - GitHub Copilot Learning Hub Team
-lastUpdated: 2026-08-19
+lastUpdated: 2026-08-30
 relatedArticles:
   - ./building-custom-agents.md
   - ./creating-effective-skills.md
@@ -111,11 +111,13 @@ Browse plugins in a specific marketplace:
 copilot plugin marketplace browse awesome-copilot
 ```
 
-Or from within an interactive Copilot session:
+Or open the plugins dashboard from within an interactive Copilot session:
 
 ```
-/plugin marketplace browse awesome-copilot
+/plugin
 ```
+
+From the dashboard, you can browse all installed plugins, manage MCP servers (`/mcp`), and browse available skills (`/skills`).
 
 > **Tip**: You can also browse plugins on this site's [Plugins Directory](../../plugins/) to see descriptions, included agents, and skills before installing.
 
@@ -239,13 +241,17 @@ copilot plugin uninstall my-plugin
 
 ### Enabling and Disabling Plugin Components
 
-*(v1.0.76+)* The `/plugins` command (or `copilot plugin list` in non-interactive mode) now includes **enable/disable toggles** for individual plugin components. You can turn off specific agents, instructions, hooks, LSP servers, or entire plugins without uninstalling them:
+*(v1.0.81+)* The `/plugin` command opens the unified **plugins dashboard**, which shows installed plugins and their components with enable/disable toggles. You can turn off specific agents, instructions, hooks, LSP servers, or entire plugins without uninstalling them:
 
 ```
-/plugins
+/plugin
 ```
 
-This opens an interactive list where each installed plugin and its components are shown with a toggle. Disabling a component hides it from Copilot without removing it from disk — useful for temporarily deactivating a hook that is too noisy, or turning off a plugin's instructions when working on a different type of project. Re-enable the component at any time from the same `/plugins` menu.
+This opens an interactive dashboard where each installed plugin and its components are shown with a toggle. Disabling a component hides it from Copilot without removing it from disk — useful for temporarily deactivating a hook that is too noisy, or turning off a plugin's instructions when working on a different type of project. Re-enable the component at any time from the same `/plugin` dashboard.
+
+> **v1.0.81 change**: The `/plugins` command was removed. Its resources moved to three dedicated commands: `/plugin` (plugin management), `/mcp` (MCP server management), and `/skills` (skills browser). Use these commands instead of `/plugins` going forward.
+
+> **Note**: Enabling and disabling individual hooks and LSP servers is temporarily unavailable following the `/plugins` removal. Use the plugin-level toggle as a workaround until per-component toggles are restored.
 
 ### Loading Plugins from a Local Directory
 
