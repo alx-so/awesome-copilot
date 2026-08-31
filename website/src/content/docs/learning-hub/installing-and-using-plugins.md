@@ -3,7 +3,7 @@ title: 'Installing and Using Plugins'
 description: 'Learn how to find, install, and manage plugins that extend GitHub Copilot CLI with reusable agents, skills, hooks, and integrations.'
 authors:
   - GitHub Copilot Learning Hub Team
-lastUpdated: 2026-08-19
+lastUpdated: 2026-08-31
 relatedArticles:
   - ./building-custom-agents.md
   - ./creating-effective-skills.md
@@ -237,15 +237,17 @@ copilot plugin uninstall my-plugin
 
 > **Auto-update for first-party plugins** *(v1.0.78+)*: Plugins sourced from the official `copilot-plugins` marketplace automatically update to their latest version at the start of each session. You do not need to run `copilot plugin update` for first-party plugins — updates are applied silently on startup. Community plugins from `awesome-copilot` and other marketplace registries still require a manual `copilot plugin update` command.
 
-### Enabling and Disabling Plugin Components
+### Managing Plugins and Components with the Dashboard
 
-*(v1.0.76+)* The `/plugins` command (or `copilot plugin list` in non-interactive mode) now includes **enable/disable toggles** for individual plugin components. You can turn off specific agents, instructions, hooks, LSP servers, or entire plugins without uninstalling them:
+*(v1.0.81+)* The **plugins dashboard** is now available to everyone. Plugin management is split across dedicated commands rather than a single `/plugins` command:
 
-```
-/plugins
-```
+- **`/plugin`** — browse, install, update, and remove plugins; see which are installed and check for updates
+- **`/mcp`** — manage MCP servers; check status, view policy blocks, and run `/mcp config` to add new servers
+- **`/skills`** — browse available skills from installed plugins
+- **`/subagents`** — manage subagents and related settings
+- **`/instructions`** — view active instruction files (each shown separately)
 
-This opens an interactive list where each installed plugin and its components are shown with a toggle. Disabling a component hides it from Copilot without removing it from disk — useful for temporarily deactivating a hook that is too noisy, or turning off a plugin's instructions when working on a different type of project. Re-enable the component at any time from the same `/plugins` menu.
+> **Note**: The `/plugins` command was removed in v1.0.81. Use `/plugin` for plugin management. Enabling and disabling individual hooks and LSP server components is temporarily unavailable while this feature is rebuilt into the new dashboard.
 
 ### Loading Plugins from a Local Directory
 

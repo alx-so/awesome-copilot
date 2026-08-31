@@ -3,7 +3,7 @@ title: 'Agents and Subagents'
 description: 'Learn how delegated subagents differ from primary agents, when to use them, and how to launch them in VS Code and Copilot CLI.'
 authors:
   - GitHub Copilot Learning Hub Team
-lastUpdated: 2026-07-01
+lastUpdated: 2026-08-31
 estimatedReadingTime: '9 minutes'
 tags:
   - agents
@@ -155,7 +155,9 @@ The **complementary model strategy** lets you specify that the rubber-duck agent
 
 Because it runs as a sub-agent layer rather than replacing your primary model, you keep your current session model and context while the rubber-duck analysis runs in the background.
 
-> **Note**: This is an experimental feature and may change. Provide feedback via `/feedback` if you find it useful.
+*(VS Code, v1.135+)* In VS Code agent host sessions, you can trigger a rubber-duck review via the **`/rubber-duck`** slash command. This invokes a second model to review in-progress agent work and surface missed details or edge cases — no need to switch to the CLI.
+
+> **Note**: This is an experimental feature and may change. Provide feedback via `/feedback` if you find it useful. For background on the multi-model pattern, see [GitHub Copilot CLI combines model families for a second opinion](https://github.blog/ai-and-ml/github-copilot/github-copilot-cli-combines-model-families-for-a-second-opinion/).
 
 ## Orchestration patterns that work well
 
@@ -193,6 +195,14 @@ That means you should think about delegation features in product-specific terms:
 - **GitHub.com coding agent / cloud agent**: supports custom agents, but some VS Code-specific frontmatter is intentionally ignored
 
 If you share agent files across surfaces, document those differences so users know which behaviors are portable and which are editor-specific.
+
+### VS Code Agent Host
+
+*(VS Code v1.135+)* The **Agent Host** is a new VS Code capability that runs agent harnesses in a dedicated process using the [Agent Host Protocol (AHP)](https://microsoft.github.io/agent-host-protocol/), powered by the [Copilot SDK (`@github/copilot-sdk`)](https://www.npmjs.com/package/@github/copilot-sdk). Key capabilities include:
+
+- **Connect multiple VS Code windows** to the same agent session
+- **Continue external sessions**: View and resume recent agent sessions created in Copilot CLI or the standalone Copilot app, directly in VS Code (enable via `chat.agentSessions.showExternal`)
+- Aligns VS Code agent behavior with Copilot CLI and the Copilot app using a shared SDK
 
 ## Common questions
 
