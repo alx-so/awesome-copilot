@@ -3,7 +3,7 @@ title: 'Installing and Using Plugins'
 description: 'Learn how to find, install, and manage plugins that extend GitHub Copilot CLI with reusable agents, skills, hooks, and integrations.'
 authors:
   - GitHub Copilot Learning Hub Team
-lastUpdated: 2026-08-19
+lastUpdated: 2026-09-02
 relatedArticles:
   - ./building-custom-agents.md
   - ./creating-effective-skills.md
@@ -239,13 +239,29 @@ copilot plugin uninstall my-plugin
 
 ### Enabling and Disabling Plugin Components
 
-*(v1.0.76+)* The `/plugins` command (or `copilot plugin list` in non-interactive mode) now includes **enable/disable toggles** for individual plugin components. You can turn off specific agents, instructions, hooks, LSP servers, or entire plugins without uninstalling them:
+*(v1.0.76+)* The `/plugin` command (or `copilot plugin list` in non-interactive mode) now includes **enable/disable toggles** for individual plugin components. You can turn off specific agents, instructions, hooks, LSP servers, or entire plugins without uninstalling them:
 
 ```
-/plugins
+/plugin
 ```
 
-This opens an interactive list where each installed plugin and its components are shown with a toggle. Disabling a component hides it from Copilot without removing it from disk — useful for temporarily deactivating a hook that is too noisy, or turning off a plugin's instructions when working on a different type of project. Re-enable the component at any time from the same `/plugins` menu.
+This opens an interactive list where each installed plugin and its components are shown with a toggle. Disabling a component hides it from Copilot without removing it from disk — useful for temporarily deactivating a hook that is too noisy, or turning off a plugin's instructions when working on a different type of project. Re-enable the component at any time from the same `/plugin` menu.
+
+> **Note (v1.0.81+)**: The older `/plugins` command has been removed. Plugin management is now split across more focused commands: `/plugin` (plugins dashboard), `/mcp` (MCP servers), `/skills` (skills), `/subagents` (subagents), and `/instructions` (instructions). This makes it easier to navigate each category without scrolling through a combined list.
+
+### Checking for Plugin Updates
+
+*(v1.0.81+)* The `/plugin` dashboard now shows **available upstream updates** for each installed plugin. When a newer version is published to the marketplace, you'll see an update indicator next to the plugin. Run:
+
+```bash
+copilot plugin update my-plugin
+```
+
+Or update all installed plugins at once:
+
+```bash
+copilot plugin update
+```
 
 ### Loading Plugins from a Local Directory
 
